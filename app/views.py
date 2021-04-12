@@ -5,8 +5,10 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 
+import os
 from app import app
 from flask import render_template, request, jsonify
+from werkzeug.utils import secure_filename
 from app.forms import UploadForm
 
 ###

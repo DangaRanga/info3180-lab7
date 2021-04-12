@@ -5,4 +5,9 @@ body {
 textarea,
 input {
   display: block;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
 }

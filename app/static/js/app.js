@@ -46,13 +46,21 @@ app.component("upload-form", {
   name: "UploadForm",
   template: `
     <section id='upload-form'>
+        <h1> Upload Form </h1>
+        <article v-if="success !== false" class="alert alert-success">
+            File Uploaded Successfully
+        </article>
+        <ul v-if="errors.length"  class="alert alert-danger">
+            <li v-for="error in errors">{{ error }}</li>
+        </ul>
         <form @submit.prevent="uploadPhoto" method='POST' enctype='multipart/form-data' id='uploadForm'>
             <label for='description'> Photo Description: </label>
             <textarea id='description' name='description'> </textarea>
             <label for="photo">Photo Upload:</label>
             <input type="file" name="photo">
-            <button type="submit" class="">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
     </section>
     `,
   methods: {
@@ -71,12 +79,23 @@ app.component("upload-form", {
           return response.json();
         })
         .then((jsonResponse) => {
-          console.log(jsonResponse);
+          if (jsonResponse.errors) {
+            this.errors = jsonResponse.errors;
+          } else {
+            this.errors = [];
+            this.success = true;
+          }
         })
         .catch((error) => {
           console.log(error);
         });
     },
+  },
+  data() {
+    return {
+      success: false,
+      errors: [],
+    };
   },
 });
 
