@@ -7,7 +7,7 @@ This file creates your application.
 
 from app import app
 from flask import render_template, request, jsonify
-from forms import UploadForm
+from app.forms import UploadForm
 
 ###
 # Routing for your application.
@@ -38,6 +38,9 @@ def upload():
 
         # Save the photo
         photo_path = secure_filename(photo.filename)
+        path_joined = os.path.join(app.config['UPLOAD_FOLDER'], photo_path)
+        photo.save(path_joined)
+
 
         response_obj = {
             "message":"File Upload Successful",
